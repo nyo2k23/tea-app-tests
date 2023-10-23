@@ -4,6 +4,8 @@ import com.thateatests.pages.HomePage;
 import com.thateatests.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chromium.ChromiumDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -16,7 +18,7 @@ public class LoginPageTest {
 
     @BeforeTest
     public void setHomePage(){
-        this.driver = new ChromeDriver();
+        this.driver = new FirefoxDriver();
         this.homePage = new HomePage(driver);
     }
 

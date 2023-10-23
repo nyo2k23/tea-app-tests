@@ -3,36 +3,46 @@ package com.thateatests.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.Map;
 
 public class HomePage {
     private final WebDriver driver;
     private WebDriverWait wait;
+    private String homePageURL;
 
     private HashMap<String, String> responses;
 
 
-    @FindBy(id = "loginbtn")
+    @FindBy(css = "button#loginbtn")
     private WebElement loginBtn;
 
-    @FindBy(id = "registerbtn")
+    @FindBy(css = "button#registerbtn")
     private WebElement registerBtn;
+
+    @FindBy(css = "#profile div:last-child")
+    private WebElement userPrompt;
+
     public HomePage(WebDriver driver)
     {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        this.responses = new HashMap<>();
+        this.homePageURL = System.getenv("UI_URL");
+        PageFactory.initElements(driver, this);
     }
 
     public void goTo() {
-        this.driver.get(System.getenv("URL"));
+        System.out.println(System.getenv("UI_URL"));
+        this.driver.get(homePageURL);
+        wait.until(d -> loginBtn.isDisplayed());
     }
 
+    public static void main(String[] args) {
+        System.out.println("URL null?: " + System.getenv("URL_URL")!=null);
+    }
     public void register(){
         this.registerBtn.click();
     }
