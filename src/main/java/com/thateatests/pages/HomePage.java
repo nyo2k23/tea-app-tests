@@ -37,7 +37,7 @@ public class HomePage {
     public void goTo() {
         System.out.println(System.getenv("UI_URL"));
         this.driver.get(homePageURL);
-        wait.until(d -> loginBtn.isDisplayed());
+        wait.until(d -> loginBtn.isDisplayed()&& registerBtn.isDisplayed());
     }
 
     public static void main(String[] args) {
@@ -51,7 +51,9 @@ public class HomePage {
         this.loginBtn.click();
     }
 
-
+    public String getUserPrompt() {
+        return userPrompt.getText();
+    }
     public HashMap<String, String> getResponses() {
         return responses;
     }
