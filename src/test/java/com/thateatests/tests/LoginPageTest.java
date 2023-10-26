@@ -15,10 +15,11 @@ public class LoginPageTest {
     private WebDriver driver;
     private HomePage homePage;
     private LoginPage loginPage;
+    private DriverManager driverManager = new DriverManager("safari");
 
     @BeforeTest
     public void setHomePage(){
-        this.driver = new FirefoxDriver();
+        this.driver = driverManager.getBrowserDriver();
         this.homePage = new HomePage(driver);
         homePage.goTo();
 
@@ -30,7 +31,9 @@ public class LoginPageTest {
     }
 
     @Test
-    public void login(){}
+    public void login(){
+
+    }
 
     @AfterTest
     public void quitDriver(){
