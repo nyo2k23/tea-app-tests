@@ -29,7 +29,7 @@ public class HomePage {
     public HomePage(WebDriver driver)
     {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         this.homePageURL = System.getenv("UI_URL");
         PageFactory.initElements(driver, this);
     }
