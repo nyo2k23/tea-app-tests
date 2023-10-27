@@ -35,7 +35,7 @@ public class HomePage {
     }
 
     public void goTo() {
-        System.out.println(System.getenv("UI_URL"));
+        //System.out.println(System.getenv("UI_URL"));
         this.driver.get(homePageURL);
         wait.until(d -> loginBtn.isDisplayed()&& registerBtn.isDisplayed());
     }
@@ -60,5 +60,9 @@ public class HomePage {
 
     public void setResponses(String k, String v) {
         this.responses.put(k,v);
+    }
+
+    public boolean logInAndRegisterButtonsAreVisible(){
+        return this.loginBtn.isDisplayed() && this.registerBtn.isDisplayed();
     }
 }
