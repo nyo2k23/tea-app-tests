@@ -1,13 +1,17 @@
 package com.thateatests.pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginPage {
     private WebDriver driver;
@@ -22,6 +26,9 @@ public class LoginPage {
     @FindBy(id = "submit")
     private WebElement loginButton;
 
+    @FindBy(tagName = "form")
+    private WebElement loginForm;
+
     @FindBy(css = "form div:nth-child(1) #outlined-basic-helper-text")
     private WebElement usernameLengthErrorMsg;
 
@@ -35,6 +42,14 @@ public class LoginPage {
     @FindBy(css = "#profile button")
     private WebElement logoutButton;
 
+    @FindBy(css = "button#loginbtn")
+    private WebElement loginPagePortal;
+
+    @FindBy(className = "MuiBox-root")
+    private WebElement progressCircle;
+
+    @FindBy(css = ".bg-yellow-50 .px-4 .py-3 .text-red-400 .m-2")
+    private WebElement loginFailMsg;
 
     /*
     @FindBy(css = "form[name='login']")
@@ -42,17 +57,55 @@ public class LoginPage {
 */
     public LoginPage(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         PageFactory.initElements(driver, this);
     }
 
-
-    public void submitUserDetails(String username, String password){
-        this.usernameInput.sendKeys(username);
-        this.passwordInput.sendKeys(password);
-        this.loginButton.click();
+     public void x(Keys k){
+        this.usernameInput.sendKeys(k);
+        this.passwordInput.sendKeys(k);
+     }
+    private void clearInputs(List<WebElement> forms){
+        //forms.forEach(this::clearText);
+        //forms.forEach(WebElement::clear);
+        forms.forEach((form) -> form.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE)));
     }
 
+
+    public void clearText(WebElement element)
+    {
+        String areaText = element.getText();
+        int  lengthOfString = areaText.length();
+
+        for(int i = 0 ; i < lengthOfString ; i++)
+        {
+            element.sendKeys(Keys.BACK_SPACE);
+        }
+    }
+
+    public void clearUserLoginDetailsFromForm(){
+        this.clearInputs(Arrays.asList(this.usernameInput, this.passwordInput));
+    }
+    public void submitLogin(){
+        this.loginButton.click();
+        this.wait.until(ExpectedConditions.visibilityOf(this.loginButton));
+        //this.wait.until(d -> serverHasResponded());
+    }
+
+
+    public void enterUserDetails(String username, String password){
+
+        this.usernameInput.sendKeys(username);
+        this.passwordInput.sendKeys(password);
+    }
+
+    public boolean serverHasResponded(){
+        return this.loginFailMsg.isDisplayed() || this.logoutButton.isDisplayed();
+    }
+
+    public void goTo(){
+        this.loginPagePortal.click();
+    }
     public String getButtonName(){
         return loginButton.getText();
     }
@@ -69,13 +122,15 @@ public class LoginPage {
         return this.loginButton.isEnabled();
     }
 
-    public boolean logoutButtonIsVisible(){
-        return this.logoutButton.isEnabled();
+    public boolean logoutButtonIsDisplayed(){
+        return this.logoutButton.isDisplayed();
     }
 
     public String getUsernameFromProfile(){
         return this.profileUsername.getText();
     }
+
+    public boolean loginFormIsDisplayed() { return this.loginForm.isDisplayed(); }
 
     public void logOut(){
         this.logoutButton.click();
