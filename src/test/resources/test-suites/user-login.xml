@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="user-login-suite">
+    <test name="failed-login">
+        <parameter name="pwdLengthFailTestDataPath" value="test-data/logins/pwd-len-fail.json">
+            <classes>
+                <class name="com.thateatests.tests.login.FailedLoginTests" />
+            </classes>
+        </parameter>
+
+        <parameter name="usernameLengthFailTestDataPath" value="test-data/logins/username-len-fail.json">
+            <classes>
+                <class name="com.thateatests.tests.login.FailedLoginTests" />
+            </classes>
+        </parameter>
+
+        <parameter name="loginFailTestDataPath" value="test-data/logins/fail.json">
+            <classes>
+                <class name="com.thateatests.tests.login.FailedLoginTests" />
+            </classes>
+        </parameter>
+
+    </test>
+    <test name="successful-login">
+        <parameter name="loginSuccessTestDataPath" value="test-data/logins/success-1.json">
+        <classes>
+            <class name="com.thateatests.tests.login.SuccessfulLoginTests" />
+        </classes>
+        </parameter>
+
+        <parameter name="loginSuccessTestDataPath" value="test-data/logins/success-2.json">
+            <classes>
+                <class name="com.thateatests.tests.login.SuccessfulLoginTests" />
+            </classes>
+        </parameter>
+    </test>
+</suite>

@@ -16,6 +16,8 @@ public class HomePage {
 
     private HashMap<String, String> responses;
 
+    @FindBy(css = "#top-bar a[href='/']")
+    private WebElement linkToHomepage;
 
     @FindBy(css = "button#loginbtn")
     private WebElement loginBtn;
@@ -30,15 +32,17 @@ public class HomePage {
     {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        this.homePageURL = System.getenv("UI_URL");
+        this.homePageURL = "";
         PageFactory.initElements(driver, this);
     }
 
     public void goTo() {
-        System.out.println(System.getenv("UI_URL"));
+        //System.out.println(System.getenv("UI_URL"));
         this.driver.get(homePageURL);
         wait.until(d -> loginBtn.isDisplayed()&& registerBtn.isDisplayed());
     }
+
+
 
     public static void main(String[] args) {
         System.out.println("URL null?: " + System.getenv("URL_URL")!=null);
@@ -60,5 +64,9 @@ public class HomePage {
 
     public void setResponses(String k, String v) {
         this.responses.put(k,v);
+    }
+
+    public boolean logInAndRegisterButtonsAreVisible(){
+        return this.loginBtn.isDisplayed() && this.registerBtn.isDisplayed();
     }
 }
