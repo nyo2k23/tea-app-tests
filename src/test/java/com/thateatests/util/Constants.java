@@ -6,5 +6,4 @@ public class Constants {
     public static String PASSWORD_LENGTH_ERROR_MSG = "Password should be at least 9 characters long";
     public static String LOGIN_FAIL_MSG = "Login failed, enter correct details or register";
     public static String SERVER_FAIL_MSG = "Server failed, come back later";
-
 }

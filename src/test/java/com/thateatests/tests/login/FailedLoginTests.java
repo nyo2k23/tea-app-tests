@@ -1,19 +1,21 @@
-package com.thateatests.tests;
+package com.thateatests.tests.login;
 
 import com.thateatests.pages.HomePage;
 import com.thateatests.pages.LoginPage;
-import com.thateatests.tests.users.model.userTestData;
+import com.thateatests.tests.BaseTest;
+import com.thateatests.tests.users.model.UserTestData;
 import com.thateatests.util.Constants;
-import org.openqa.selenium.Keys;
+import com.thateatests.util.JsonUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class LoginPageTest extends BaseTest {
+public class FailedLoginTests extends BaseTest {
     private HomePage homePage;
     private LoginPage loginPage;
-    private userTestData failLoginTestDataPath;
+    private UserTestData userTestData;
     //private DriverManager driverManager = new DriverManager("safari");
 
     @BeforeTest
@@ -28,6 +30,7 @@ public class LoginPageTest extends BaseTest {
     @BeforeMethod
     public void goBackToLoginPage() {
         homePage.goTo();
+
     }
 
 //    @BeforeTest
@@ -38,7 +41,7 @@ public class LoginPageTest extends BaseTest {
 
 
     @Test()
-    public void ATestLoginElements() {
+    public void TestLoginElements() {
         loginPage.goTo();
         Assert.assertEquals(loginPage.getUsernameFromProfile(), Constants.LOGIN_OR_REGISTER_PROMPT);
         Assert.assertEquals(loginPage.loginFormIsDisplayed(), true);
@@ -47,9 +50,11 @@ public class LoginPageTest extends BaseTest {
 
 
     @Test()
-    public void BUsernameLengthLoginFail() {
+    @Parameters("usernameLengthFailTestDataPath")
+    public void UsernameLengthLoginFail(String usernameLengthFailTestDataPath) {
+        this.userTestData = JsonUtil.getTestData(usernameLengthFailTestDataPath, UserTestData.class);
         loginPage.goTo();
-        loginPage.enterUserDetails("u", "hjgjsk7sks8");
+        loginPage.enterUserDetails(userTestData.username(), userTestData.password());
         Assert.assertEquals
                 (loginPage.getUsernameLengthErrorMessage(), Constants.USERNAME_LENGTH_ERROR_MSG);
         Assert.assertEquals(loginPage.submitButtonIsEnabled(), false);
@@ -57,32 +62,30 @@ public class LoginPageTest extends BaseTest {
     }
 
     @Test()
-    public void CPasswordLengthLoginFail() {
+    @Parameters("pwdLengthFailTestDataPath")
+    public void PasswordLengthLoginFail(String pwdLengthFailTestDataPath) {
         //loginPage.clearUserLoginDetailsFromForm();
         //String s = Keys.chord(Keys.CONTROL,"a", Keys.DELETE);
         //loginPage.enterUserDetails(s, s);
+        this.userTestData = JsonUtil.getTestData(pwdLengthFailTestDataPath, UserTestData.class);
         loginPage.goTo();
-        loginPage.enterUserDetails("jh", "uu82dsss");
+        loginPage.enterUserDetails(userTestData.username(), userTestData.password());
         Assert.assertEquals
                 (loginPage.getPasswordLengthErrorMessage(), Constants.PASSWORD_LENGTH_ERROR_MSG);
         Assert.assertEquals(loginPage.submitButtonIsEnabled(), false);
     }
 
     @Test()
-    public void DTestLoginSuccess() {
-        //TODO
-        // use user after successful registration test or register here
+    @Parameters("loginFailTestDataPath")
+    public void unregisteredLoginFail(String loginFailTestDataPath) {
+        //loginPage.clearUserLoginDetailsFromForm();
+        //String s = Keys.chord(Keys.CONTROL,"a", Keys.DELETE);
+        //loginPage.enterUserDetails(s, s);
+        this.userTestData = JsonUtil.getTestData(loginFailTestDataPath, UserTestData.class);
         loginPage.goTo();
-        loginPage.enterUserDetails("ghos", "password!");
-        loginPage.submitLogin();
-        Assert.assertEquals(loginPage.logoutButtonIsDisplayed(), true);
-        Assert.assertEquals(loginPage.getUsernameFromProfile(), "ghos");
-    }
-
-    @Test(dependsOnMethods = "DTestLoginSuccess")
-    public void ETestLogoutSuccess() {
-        loginPage.logOut();
-        Assert.assertEquals(loginPage.getUsernameFromProfile(), Constants.LOGIN_OR_REGISTER_PROMPT);
-        Assert.assertEquals(homePage.logInAndRegisterButtonsAreVisible(), true);
+        loginPage.enterUserDetails(userTestData.username(), userTestData.password());
+        Assert.assertEquals
+                (loginPage.getPasswordLengthErrorMessage(), Constants.LOGIN_FAIL_MSG);
+        Assert.assertEquals(loginPage.submitButtonIsEnabled(), false);
     }
 }

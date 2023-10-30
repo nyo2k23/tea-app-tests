@@ -1,6 +1,6 @@
 package com.thateatests.tests.users.model;
 
-public record userTestData(String username,
+public record UserTestData(String username,
                            String password
 ) {
 }
