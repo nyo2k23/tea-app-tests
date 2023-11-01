@@ -48,7 +48,7 @@ public class LoginPage {
     @FindBy(className = "MuiBox-root")
     private WebElement progressCircle;
 
-    @FindBy(css = ".bg-yellow-50 .px-4 .py-3 .text-red-400 .m-2")
+    @FindBy(css = "div.bg-yellow-50.px-4.py-3.text-red-400.m-2")
     private WebElement loginFailMsg;
 
     /*
@@ -88,7 +88,7 @@ public class LoginPage {
     }
     public void submitLogin(){
         this.loginButton.click();
-        this.wait.until(ExpectedConditions.visibilityOf(this.loginButton));
+        this.wait.until(ExpectedConditions.visibilityOf(this.logoutButton));
         //this.wait.until(d -> serverHasResponded());
     }
 
@@ -117,6 +117,7 @@ public class LoginPage {
     public String getPasswordLengthErrorMessage(){
         return passwordLengthErrorMsg.getText();
     }
+    public String getLoginFailMsg() { return loginFailMsg.getText(); }
 
     public boolean submitButtonIsEnabled(){
         return this.loginButton.isEnabled();

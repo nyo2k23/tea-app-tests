@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<suite name="user-login-suite">
+<suite name="user-login-suite" parallel="tests" thread-count="2">
     <test name="failed-login">
         <parameter name="pwdLengthFailTestDataPath" value="test-data/logins/pwd-len-fail.json">
             <classes>

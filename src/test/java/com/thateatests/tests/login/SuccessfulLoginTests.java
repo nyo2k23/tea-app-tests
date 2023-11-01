@@ -4,6 +4,7 @@ import com.thateatests.pages.HomePage;
 import com.thateatests.pages.LoginPage;
 import com.thateatests.tests.BaseTest;
 import com.thateatests.tests.users.model.UserTestData;
+import com.thateatests.util.Config;
 import com.thateatests.util.Constants;
 import com.thateatests.util.JsonUtil;
 import org.testng.Assert;
@@ -27,13 +28,7 @@ public class SuccessfulLoginTests extends BaseTest {
         this.homePage = new HomePage(driver);
         this.loginPage = new LoginPage(driver);
         this.userTestData = JsonUtil.getTestData(loginSuccessTestDataPath, UserTestData.class);
-        homePage.goTo();
-
-    }
-
-    @BeforeMethod
-    public void goBackToLoginPage() {
-
+        homePage.goTo(Config.get(Constants.UI_URL));
     }
 
 //    @BeforeTest
@@ -60,7 +55,7 @@ public class SuccessfulLoginTests extends BaseTest {
         loginPage.enterUserDetails(userTestData.username(), userTestData.password());
         loginPage.submitLogin();
         Assert.assertEquals(loginPage.logoutButtonIsDisplayed(), true);
-        Assert.assertEquals(loginPage.getUsernameFromProfile(), "ghos");
+        Assert.assertEquals(loginPage.getUsernameFromProfile(), userTestData.username());
     }
 
     @Test(dependsOnMethods = "TestLoginSuccess")
