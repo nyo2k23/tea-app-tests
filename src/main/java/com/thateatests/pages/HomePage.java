@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class HomePage {
     private final WebDriver driver;
     private WebDriverWait wait;
-    private String homePageURL;
+    //private String homePageURL;
 
     private HashMap<String, String> responses;
 
@@ -32,11 +32,11 @@ public class HomePage {
     {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        this.homePageURL = "";
+        //this.homePageURL = "";
         PageFactory.initElements(driver, this);
     }
 
-    public void goTo() {
+    public void goTo(String homePageURL) {
         //System.out.println(System.getenv("UI_URL"));
         this.driver.get(homePageURL);
         wait.until(d -> loginBtn.isDisplayed()&& registerBtn.isDisplayed());

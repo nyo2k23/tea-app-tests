@@ -4,6 +4,7 @@ import com.thateatests.pages.HomePage;
 import com.thateatests.pages.LoginPage;
 import com.thateatests.tests.BaseTest;
 import com.thateatests.tests.users.model.UserTestData;
+import com.thateatests.util.Config;
 import com.thateatests.util.Constants;
 import com.thateatests.util.JsonUtil;
 import org.testng.Assert;
@@ -29,7 +30,7 @@ public class FailedLoginTests extends BaseTest {
 
     @BeforeMethod
     public void goBackToLoginPage() {
-        homePage.goTo();
+        homePage.goTo(Config.get(Constants.UI_URL));
 
     }
 
@@ -85,7 +86,7 @@ public class FailedLoginTests extends BaseTest {
         loginPage.goTo();
         loginPage.enterUserDetails(userTestData.username(), userTestData.password());
         Assert.assertEquals
-                (loginPage.getPasswordLengthErrorMessage(), Constants.LOGIN_FAIL_MSG);
+                (loginPage.getLoginFailMsg(), Constants.LOGIN_FAIL_MSG);
         Assert.assertEquals(loginPage.submitButtonIsEnabled(), false);
     }
 }

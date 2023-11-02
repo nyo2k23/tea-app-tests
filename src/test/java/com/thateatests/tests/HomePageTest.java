@@ -1,6 +1,7 @@
 package com.thateatests.tests;
 
 import com.thateatests.pages.HomePage;
+import com.thateatests.util.Config;
 import com.thateatests.util.Constants;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void testHomePage() {
-        homePage.goTo();
+        homePage.goTo(Config.get(Constants.UI_URL));
         Assert.assertEquals(Constants.LOGIN_OR_REGISTER_PROMPT, homePage.getUserPrompt());
         Assert.assertEquals(homePage.logInAndRegisterButtonsAreVisible(), true);
     }
