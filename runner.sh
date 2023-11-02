@@ -15,6 +15,7 @@ echo "HUB_HOST      : ${HUB_HOST:-hub}"
 echo "BROWSER       : ${BROWSER:-chrome}"
 echo "THREAD_COUNT  : ${THREAD_COUNT:-1}"
 echo "TEST_SUITE    : ${TEST_SUITE}"
+echo "UI_URL        : ${UI_URL:-ui_url}"
 echo "-------------------------------------------"
 
 # Do not start the tests immediately. Hub has to be ready with browser nodes
@@ -40,6 +41,7 @@ java -cp 'libs/*' \
      -Dselenium.grid.enabled=true \
      -Dselenium.grid.hubHost="${HUB_HOST:-hub}" \
      -Dbrowser="${BROWSER:-chrome}" \
+     -Dui.url="${UI_URL:-ui_url}" \
      org.testng.TestNG \
      -threadcount "${THREAD_COUNT:-1}" \
      test-suites/"${TEST_SUITE}"
