@@ -2,6 +2,10 @@ pipeline{
 
     agent any
 
+    tools{ 
+        maven 'maven-tool' 
+    }
+
     stages{
 
         stage('Build Jar'){
@@ -12,7 +16,7 @@ pipeline{
 
         stage('Build Image'){
             steps{
-                sh 'docker build -t=mdmsn/tea-selenium .'
+                sh 'docker build -t=mdmsn/tea-selenium:latest .'
             }
         }
 
@@ -21,9 +25,10 @@ pipeline{
                 DOCKER_HUB = credentials('dockerhub-creds')
             }
             steps{
-                // There might be a warning.
-                sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
-                sh 'docker push mdmsn/tea-selenium'
+                sh 'echo ${DOCKER_HUB_PSW} | docker login -u ${DOCKER_HUB_USR} --password-stdin'
+                sh 'docker push mdmsn/tea-selenium:latest'
+                sh "docker tag mdmsn/tea-selenium:latest mdmsn/tea-selenium${env.BUILD_NUMBER}"
+                SH "docker push mdmsn/tea-selenium${env.BUILD_NUMBER}"
             }
         }
 
