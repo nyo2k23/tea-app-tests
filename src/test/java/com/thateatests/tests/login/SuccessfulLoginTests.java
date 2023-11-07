@@ -17,25 +17,15 @@ public class SuccessfulLoginTests extends BaseTest {
     private HomePage homePage;
     private LoginPage loginPage;
     private UserTestData userTestData;
-    //private DriverManager driverManager = new DriverManager("safari");
 
     @BeforeTest
     @Parameters("loginSuccessTestDataPath")
     public void setHomePage(String loginSuccessTestDataPath) {
-        //this.driver = driverManager.getBrowserDriver();
-//        WebDriverManager.chromedriver().setup();
-//        this.driver = new ChromeDriver();
         this.homePage = new HomePage(driver);
         this.loginPage = new LoginPage(driver);
         this.userTestData = JsonUtil.getTestData(loginSuccessTestDataPath, UserTestData.class);
         homePage.goTo(Config.get(Constants.UI_URL));
     }
-
-//    @BeforeTest
-//    public  void setUpTestDataPaths(){
-//        this.failLoginTestDataPath = JsonUtil.getTestData
-//                ("src/test/resources/test-data/fail.json", userTestData.class);
-//    }
 
 
     @Test()
@@ -49,9 +39,6 @@ public class SuccessfulLoginTests extends BaseTest {
 
     @Test(dependsOnMethods = "TestLoginElements")
     public void TestLoginSuccess() {
-        //TODO
-        // use user after successful registration test or register here
-        //loginPage.goTo();
         loginPage.enterUserDetails(userTestData.username(), userTestData.password());
         loginPage.submitLogin();
         Assert.assertEquals(loginPage.logoutButtonIsDisplayed(), true);

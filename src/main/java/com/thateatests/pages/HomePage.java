@@ -12,7 +12,6 @@ import java.util.HashMap;
 public class HomePage {
     private final WebDriver driver;
     private WebDriverWait wait;
-    //private String homePageURL;
 
     private HashMap<String, String> responses;
 
@@ -32,16 +31,14 @@ public class HomePage {
     {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        //this.homePageURL = "";
         PageFactory.initElements(driver, this);
     }
 
     public void goTo(String homePageURL) {
-        //System.out.println(System.getenv("UI_URL"));
+        System.out.println("going to url: " + homePageURL);
         this.driver.get(homePageURL);
-        wait.until(d -> loginBtn.isDisplayed()&& registerBtn.isDisplayed());
+        wait.until(d -> loginBtn.isDisplayed() && registerBtn.isDisplayed());
     }
-
 
 
     public static void main(String[] args) {
@@ -58,13 +55,7 @@ public class HomePage {
     public String getUserPrompt() {
         return userPrompt.getText();
     }
-    public HashMap<String, String> getResponses() {
-        return responses;
-    }
 
-    public void setResponses(String k, String v) {
-        this.responses.put(k,v);
-    }
 
     public boolean logInAndRegisterButtonsAreVisible(){
         return this.loginBtn.isDisplayed() && this.registerBtn.isDisplayed();
