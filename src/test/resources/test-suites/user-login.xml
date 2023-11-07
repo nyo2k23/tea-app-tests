@@ -28,10 +28,5 @@
         </classes>
         </parameter>
 
-        <parameter name="loginSuccessTestDataPath" value="test-data/logins/success-2.json">
-            <classes>
-                <class name="com.thateatests.tests.login.SuccessfulLoginTests" />
-            </classes>
-        </parameter>
     </test>
 </suite>

@@ -66,8 +66,8 @@ public class FailedLoginTests extends BaseTest {
     public void unregisteredLoginFail(String loginFailTestDataPath) {
         this.userTestData = JsonUtil.getTestData(loginFailTestDataPath, UserTestData.class);
         loginPage.enterUserDetails(userTestData.username(), userTestData.password());
+        loginPage.submitLogin();
         Assert.assertEquals
                 (loginPage.getLoginFailMsg(), Constants.LOGIN_FAIL_MSG);
-        //Assert.assertEquals(loginPage.submitButtonIsEnabled(), false);
     }
 }
