@@ -95,13 +95,16 @@ public class LoginPage {
 
     public void submitLogin() {
         this.loginButton.click();
-        this.wait.until(ExpectedConditions.visibilityOf(this.logoutButton));
+        //this.wait.until(ExpectedConditions.visibilityOf(this.logoutButton));
         //this.wait.until(d -> serverHasResponded());
+        wait.until(ExpectedConditions.or(
+                ExpectedConditions.visibilityOf(loginFailMsg),
+                ExpectedConditions.visibilityOf(logoutButton)
+        ));
     }
 
 
     public void enterUserDetails(String username, String password) {
-
         this.usernameInput.sendKeys(username);
         this.passwordInput.sendKeys(password);
     }
