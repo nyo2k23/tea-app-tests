@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -57,4 +58,5 @@ public abstract class BaseTest {
     public void quitDriver(){
         this.driver.quit();
     }
+
 }

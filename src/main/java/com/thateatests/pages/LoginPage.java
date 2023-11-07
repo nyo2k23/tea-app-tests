@@ -17,6 +17,9 @@ public class LoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    @FindBy(css="#top-bar div:nth-child(1) a")
+    private WebElement banner;
+
     @FindBy(name = "username")
     private WebElement usernameInput;
 
@@ -55,85 +58,95 @@ public class LoginPage {
     @FindBy(css = "form[name='login']")
     private WebElement x;
 */
-    public LoginPage(WebDriver driver){
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         PageFactory.initElements(driver, this);
     }
 
-     public void x(Keys k){
+    public void goToLandingPage(){
+        this.banner.click();
+    }
+
+    public void x(Keys k) {
         this.usernameInput.sendKeys(k);
         this.passwordInput.sendKeys(k);
-     }
-    private void clearInputs(List<WebElement> forms){
+    }
+
+    private void clearInputs(List<WebElement> forms) {
         //forms.forEach(this::clearText);
         //forms.forEach(WebElement::clear);
-        forms.forEach((form) -> form.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE)));
+        forms.forEach((form) -> form.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE)));
     }
 
 
-    public void clearText(WebElement element)
-    {
+    public void clearText(WebElement element) {
         String areaText = element.getText();
-        int  lengthOfString = areaText.length();
+        int lengthOfString = areaText.length();
 
-        for(int i = 0 ; i < lengthOfString ; i++)
-        {
+        for (int i = 0; i < lengthOfString; i++) {
             element.sendKeys(Keys.BACK_SPACE);
         }
     }
 
-    public void clearUserLoginDetailsFromForm(){
+    public void clearUserLoginDetailsFromForm() {
         this.clearInputs(Arrays.asList(this.usernameInput, this.passwordInput));
     }
-    public void submitLogin(){
+
+    public void submitLogin() {
         this.loginButton.click();
         this.wait.until(ExpectedConditions.visibilityOf(this.logoutButton));
         //this.wait.until(d -> serverHasResponded());
     }
 
 
-    public void enterUserDetails(String username, String password){
+    public void enterUserDetails(String username, String password) {
 
         this.usernameInput.sendKeys(username);
         this.passwordInput.sendKeys(password);
     }
 
-    public boolean serverHasResponded(){
+    public boolean serverHasResponded() {
         return this.loginFailMsg.isDisplayed() || this.logoutButton.isDisplayed();
     }
 
-    public void goTo(){
+    public void goTo() {
         this.loginPagePortal.click();
     }
-    public String getButtonName(){
+
+    public String getButtonName() {
         return loginButton.getText();
     }
 
-    public String getUsernameLengthErrorMessage(){
+    public String getUsernameLengthErrorMessage() {
         return usernameLengthErrorMsg.getText();
     }
 
-    public String getPasswordLengthErrorMessage(){
+    public String getPasswordLengthErrorMessage() {
         return passwordLengthErrorMsg.getText();
     }
-    public String getLoginFailMsg() { return loginFailMsg.getText(); }
 
-    public boolean submitButtonIsEnabled(){
+    public String getLoginFailMsg() {
+        return loginFailMsg.getText();
+    }
+
+    public boolean submitButtonIsEnabled() {
         return this.loginButton.isEnabled();
     }
 
-    public boolean logoutButtonIsDisplayed(){
+    public boolean logoutButtonIsDisplayed() {
         return this.logoutButton.isDisplayed();
     }
 
-    public String getUsernameFromProfile(){
+    public String getUsernameFromProfile() {
         return this.profileUsername.getText();
     }
 
-    public boolean loginFormIsDisplayed() { return this.loginForm.isDisplayed(); }
+    public boolean loginFormIsDisplayed() {
+        return this.loginForm.isDisplayed();
+    }
 
-    public void logOut(){
+    public void logOut() {
         this.logoutButton.click();
     }
 }
